@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Camera Pop-up</title>
+  <script>
+    function onOpenClick() {
+      camWindow = window.open("", "camera", "status=1,width=300,height=300");
+      cameraPreview = camWindow.document.createElement("video");
+      cameraPreview.style.width = "100%";
+      cameraPreview.style.height = "100%";
+      cameraPreview.autoplay = true;
+      camWindow.document.body.appendChild(cameraPreview);
+      if (camWindow.navigator.mediaDevices.getUserMedia) {
+        camWindow.navigator.mediaDevices.getUserMedia({ video: true })
+          .then(function (stream) {
+              cameraPreview.srcObject = stream;
+          })
+          .catch(function (err0r) {
+              console.log("Something went wrong!");
+          });
+      }
+    }
+  </script>
+</head>
+<body>
+  <button onclick="onOpenClick()" id="start-button">Click to open camera pop-up.</button>
+</body>
+</html>
